@@ -1,0 +1,127 @@
+{
+  "id": "brush-hotkeys",
+  "title": "05 Brush hotkeys",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Hands off the sliders",
+      "body": "Pros barely touch the toolbar. One hand on the pen, one hand on the keys. Let's wire your left hand (or right, fellow lefties).",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document",
+        "practice_layer",
+        "pressure_brush"
+      ]
+    },
+    {
+      "id": "brackets",
+      "title": "[ and ]",
+      "body": "Tap {key:decrease_brush_size|[} and {key:increase_brush_size|]} to shrink and grow the brush.",
+      "check": {
+        "type": "action",
+        "names": [
+          "increase_brush_size",
+          "decrease_brush_size"
+        ]
+      }
+    },
+    {
+      "id": "shift-drag",
+      "title": "Shift + drag",
+      "body": "Hold <b>Shift</b> and drag the pen left or right on the canvas. The size follows your hand. Faster than brackets for big jumps.",
+      "check": {
+        "type": "brush_size_changed",
+        "factor": 1.4
+      }
+    },
+    {
+      "id": "opacity-keys",
+      "title": "I and O",
+      "body": "{key:decrease_opacity|I} lowers opacity, {key:increase_opacity|O} raises it. Try both.",
+      "check": {
+        "type": "action",
+        "names": [
+          "decrease_opacity",
+          "increase_opacity"
+        ]
+      }
+    },
+    {
+      "id": "eraser",
+      "title": "E for eraser",
+      "body": "{key:erase_action|E} flips the current brush into an eraser and back. Erase a little, then press E again.",
+      "check": {
+        "type": "action",
+        "names": [
+          "erase_action"
+        ]
+      }
+    },
+    {
+      "id": "swap",
+      "title": "X swaps colors",
+      "body": "Your foreground and background colors live at the bottom of the toolbox. {key:toggle_fg_bg|X} swaps them. Painting black? X: now you're painting white.",
+      "check": {
+        "type": "action",
+        "names": [
+          "toggle_fg_bg"
+        ]
+      }
+    },
+    {
+      "id": "reset-colors",
+      "title": "D for default",
+      "body": "{key:reset_fg_bg|D} snaps back to black and white.",
+      "check": {
+        "type": "action",
+        "names": [
+          "reset_fg_bg"
+        ]
+      }
+    },
+    {
+      "id": "lighter-darker",
+      "title": "K and L",
+      "body": "{key:make_brush_color_darker|K} darkens your color a notch, {key:make_brush_color_lighter|L} lightens it. Handy for quick value shifts.",
+      "check": {
+        "type": "action",
+        "names": [
+          "make_brush_color_darker",
+          "make_brush_color_lighter"
+        ]
+      }
+    },
+    {
+      "id": "sample",
+      "title": "Ctrl + click to sample",
+      "body": "I painted an apple. Hold <b>Ctrl</b> and click it with the pen: you just grabbed its red without switching tools.",
+      "check": {
+        "type": "fg_changed"
+      },
+      "setup": [
+        {
+          "do": "paint_blob",
+          "name": "Apple",
+          "radius": 0.15
+        },
+        "practice_layer",
+        {
+          "do": "fg_gray",
+          "value": 0.0
+        }
+      ],
+      "hint": "Sampling grabs the color under the pen. The P tool does the same thing as a full tool."
+    },
+    {
+      "id": "cleared",
+      "title": "05 cleared",
+      "body": "[ ] Shift-drag, I O, E, X, D, K L, Ctrl-click. Your off hand just got a job.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

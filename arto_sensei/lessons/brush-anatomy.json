@@ -1,0 +1,94 @@
+{
+  "id": "brush-anatomy",
+  "title": "03 Brush anatomy",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "A brush is a recipe",
+      "body": "A Krita brush preset is a recipe: a <b>tip</b> (the shape of each dab), plus <b>settings</b> that react to your pen. Three dials on the top toolbar change any brush on the fly: <b>Size</b>, <b>Opacity</b>, <b>Flow</b>.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document",
+        "practice_layer",
+        "pressure_brush"
+      ]
+    },
+    {
+      "id": "preset",
+      "title": "Try a different brush",
+      "body": "Open Brush Presets ({key:show_brush_presets|F6}) and pick anything that looks fun. Pencils, inks, a bristle brush. Scribble with it.",
+      "check": {
+        "type": "brush_changed"
+      }
+    },
+    {
+      "id": "size",
+      "title": "Size",
+      "body": "Drag the <b>Size</b> slider on the top toolbar. Make it at least half again bigger or smaller.",
+      "check": {
+        "type": "brush_size_changed",
+        "factor": 1.5
+      }
+    },
+    {
+      "id": "opacity",
+      "title": "Opacity: the darkest a stroke can get",
+      "body": "Drag <b>Opacity</b> below 50%. Now paint a stroke, lift, and paint over it. See it build up where the strokes cross? Opacity caps each stroke, not the painting.",
+      "check": {
+        "type": "opacity",
+        "below": 0.5
+      }
+    },
+    {
+      "id": "flow",
+      "title": "Flow: how much paint per dab",
+      "body": "Now drag <b>Flow</b> below 50% and paint one long stroke that crosses back over itself. Flow builds up <i>within</i> a single stroke, like an airbrush. Opacity builds up <i>between</i> strokes.",
+      "check": {
+        "type": "flow",
+        "below": 0.5
+      }
+    },
+    {
+      "id": "reset-sliders",
+      "title": "Back to full strength",
+      "body": "Put Opacity back near 100% (press <b>O</b> a few times, or drag it).",
+      "check": {
+        "type": "opacity",
+        "above": 0.95
+      }
+    },
+    {
+      "id": "editor",
+      "title": "Under the hood",
+      "body": "Press {key:show_brush_editor|F5}: the Brush Editor. Every setting the pen can drive lives here: size, opacity, rotation. Peek, then close it. Lesson 18 is all about this.",
+      "check": {
+        "type": "action",
+        "names": [
+          "show_brush_editor"
+        ]
+      }
+    },
+    {
+      "id": "eraser",
+      "title": "Every brush is an eraser",
+      "body": "Press {key:erase_action|E}. Your current brush now erases. Same shape, same pressure. Press E again to go back.",
+      "check": {
+        "type": "action",
+        "names": [
+          "erase_action"
+        ]
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "03 cleared",
+      "body": "Preset, size, opacity, flow, the editor, eraser mode. You can read any brush now.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

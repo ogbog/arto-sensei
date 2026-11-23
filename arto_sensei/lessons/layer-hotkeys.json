@@ -1,0 +1,127 @@
+{
+  "id": "layer-hotkeys",
+  "title": "08 Layer hotkeys",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Layers without the mouse",
+      "body": "Same moves as lesson 07, keyboard edition. I made two fruit layers to juggle.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Layer Keys"
+        },
+        {
+          "do": "paint_blob",
+          "name": "Lemon",
+          "color": [
+            235,
+            200,
+            60
+          ],
+          "radius": 0.12,
+          "cx": 0.68
+        },
+        {
+          "do": "paint_blob",
+          "name": "Apple",
+          "color": [
+            200,
+            60,
+            50
+          ],
+          "radius": 0.12,
+          "cx": 0.32
+        }
+      ]
+    },
+    {
+      "id": "insert",
+      "title": "New layer",
+      "body": "Press {key:add_new_paint_layer|Insert}.",
+      "check": {
+        "type": "action",
+        "names": [
+          "add_new_paint_layer"
+        ]
+      }
+    },
+    {
+      "id": "duplicate",
+      "title": "Duplicate",
+      "body": "Press {key:duplicatelayer|Ctrl+J}: a copy of the active layer.",
+      "check": {
+        "type": "action",
+        "names": [
+          "duplicatelayer"
+        ]
+      }
+    },
+    {
+      "id": "walk",
+      "title": "Walk the stack",
+      "body": "{key:activateNextLayer|PgUp} and {key:activatePreviousLayer|PgDown} move the selection up and down the stack.",
+      "check": {
+        "type": "action",
+        "names": [
+          "activateNextLayer",
+          "activatePreviousLayer"
+        ]
+      }
+    },
+    {
+      "id": "move",
+      "title": "Move a layer",
+      "body": "{key:move_layer_up|Ctrl+PgUp} and {key:move_layer_down|Ctrl+PgDown} move the active layer itself.",
+      "check": {
+        "type": "action",
+        "names": [
+          "move_layer_up",
+          "move_layer_down"
+        ]
+      }
+    },
+    {
+      "id": "pick",
+      "title": "R + click: pick by pixel",
+      "body": "Hold <b>R</b> and click whichever fruit is NOT the active layer. Krita jumps to the layer you clicked. Fastest way to find a layer in a big painting.",
+      "check": {
+        "type": "active_changed"
+      }
+    },
+    {
+      "id": "group",
+      "title": "Quick group",
+      "body": "Press {key:create_quick_group|Ctrl+G}. The active layer goes into a new folder.",
+      "check": {
+        "type": "action",
+        "names": [
+          "create_quick_group"
+        ]
+      }
+    },
+    {
+      "id": "merge",
+      "title": "Merge down",
+      "body": "Press {key:merge_layer|Ctrl+E}: the active layer melts into the one below. Use it when a part is finished, not before.",
+      "check": {
+        "type": "action",
+        "names": [
+          "merge_layer"
+        ]
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "08 cleared",
+      "body": "Insert, Ctrl+J, PgUp/PgDn, Ctrl+PgUp/PgDn, R-click, Ctrl+G, Ctrl+E.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

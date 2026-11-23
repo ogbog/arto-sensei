@@ -1,0 +1,31 @@
+{
+  "license": "CC BY 4.0, Oscar Baechler",
+  "note": "Order lives here; lessons are files named <id>.json. Reorder freely, ids never change.",
+  "lessons": [
+    {"id": "tablet-setup", "title": "00 Tablet setup and your hand"},
+    {"id": "interface-basics", "title": "01 Interface basics"},
+    {"id": "view-navigation", "title": "02 View navigation"},
+    {"id": "brush-anatomy", "title": "03 Brush anatomy"},
+    {"id": "pen-pressure", "title": "04 Pen pressure and speed"},
+    {"id": "brush-hotkeys", "title": "05 Brush hotkeys"},
+    {"id": "hand-motion", "title": "06 Hand motion control (hatching lanes)"},
+    {"id": "layers-anatomy", "title": "07 Layers anatomy"},
+    {"id": "layer-hotkeys", "title": "08 Layer hotkeys"},
+    {"id": "alpha-lock-clipping", "title": "09 Alpha lock, inherit alpha, quick clipping groups"},
+    {"id": "value-1-buildup", "title": "10 Value 1: building opacity with strokes"},
+    {"id": "value-2-mud-mix", "title": "11 Value 2: blend, mud mix, pick"},
+    {"id": "value-3-layer-opacity", "title": "12 Value 3: layers with lowered opacity"},
+    {"id": "value-4-color-dockers", "title": "13 Value 4: picking value in color dockers"},
+    {"id": "value-5-scale", "title": "14 Value 5: the 10-step scale, eyes only"},
+    {"id": "selections-transform", "title": "15 Selections and transform"},
+    {"id": "bargue-sight-size", "title": "16 Technique: Bargue sight-size setup"},
+    {"id": "layer-pipeline", "title": "17 Technique: the layer pipeline"},
+    {"id": "brush-customization", "title": "18 Brush customization and the pop-up palette"},
+    {"id": "blend-modes", "title": "19 Blend modes, brushes and layers"},
+    {"id": "filter-layers-flats", "title": "20 Filter layers, masks, fills and flats"},
+    {"id": "reference-checking", "title": "21 Reference, mirror, second view, grids"},
+    {"id": "wrap-around", "title": "22 Wrap-around mode for tileable textures"},
+    {"id": "saving-recorder", "title": "23 Saving, backups and the Recorder"},
+    {"id": "capstone-master-copy", "title": "24 Capstone: a Bargue master copy"}
+  ]
+}

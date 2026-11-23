@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+arto_sensei/_dev/
+tests/out/
+dist/
+_krita_ref/

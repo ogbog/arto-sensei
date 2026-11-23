@@ -1,0 +1,122 @@
+{
+  "id": "layers-anatomy",
+  "title": "07 Layers anatomy",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Sheets of glass",
+      "body": "Layers are sheets of glass stacked over your paper. Paint on one, and the others don't care. The <b>Layers</b> docker shows the stack: the top of the list is the top of the pile.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Layers"
+        }
+      ]
+    },
+    {
+      "id": "new",
+      "title": "Add a layer",
+      "body": "Click the <b>+</b> button at the bottom of the Layers docker. A fresh paint layer appears above the active one.",
+      "check": {
+        "type": "node",
+        "node_type": "paintlayer",
+        "created": true
+      }
+    },
+    {
+      "id": "rename",
+      "title": "Name it",
+      "body": "Double-click the new layer's name and call it <b>Sky</b>. Named layers are a gift to future you.",
+      "check": {
+        "type": "node",
+        "name_is": "Sky"
+      }
+    },
+    {
+      "id": "second",
+      "title": "A layer on top",
+      "body": "Add another layer above Sky and name it <b>Tree</b>. Paint a blob of tree on it, and some sky on Sky.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "Sky",
+          "Tree"
+        ]
+      }
+    },
+    {
+      "id": "hide",
+      "title": "Hide",
+      "body": "Click the eye next to Sky. Gone, but not deleted.",
+      "check": {
+        "type": "node",
+        "name_contains": "Sky",
+        "visible": false
+      }
+    },
+    {
+      "id": "show",
+      "title": "Show",
+      "body": "Click the eye again.",
+      "check": {
+        "type": "node",
+        "name_contains": "Sky",
+        "visible": true
+      }
+    },
+    {
+      "id": "opacity",
+      "title": "Layer opacity",
+      "body": "Select Tree and drag its <b>Opacity</b> (top of the Layers docker) below 50%. Ghostly.",
+      "check": {
+        "type": "node",
+        "name_contains": "Tree",
+        "opacity_max": 0.5
+      }
+    },
+    {
+      "id": "lock",
+      "title": "Lock",
+      "body": "Click the padlock on Sky. A locked layer can't be painted on. Great for reference and finished parts.",
+      "check": {
+        "type": "node",
+        "name_contains": "Sky",
+        "locked": true
+      }
+    },
+    {
+      "id": "reorder",
+      "title": "Reorder",
+      "body": "Drag Sky above Tree in the docker. The sky now covers the tree. Order is everything.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "Tree",
+          "Sky"
+        ]
+      }
+    },
+    {
+      "id": "group",
+      "title": "Group",
+      "body": "Click the folder button at the bottom of the docker (or right-click > Group). Groups are folders: tidy stacks, and you can move them together.",
+      "check": {
+        "type": "node",
+        "node_type": "grouplayer",
+        "created": true
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "07 cleared",
+      "body": "New, rename, stack, hide, opacity, lock, reorder, group. You can build a painting in layers now.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

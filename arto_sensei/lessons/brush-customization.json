@@ -1,0 +1,74 @@
+{
+  "id": "brush-customization",
+  "title": "18 Brush customization and the pop-up palette",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Make it yours",
+      "body": "Every preset is a starting point. Change it, save it under your own name, and keep your favorites one right-click away.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document",
+        "practice_layer",
+        "pressure_brush"
+      ]
+    },
+    {
+      "id": "editor",
+      "title": "Open the editor",
+      "body": "Press {key:show_brush_editor|F5}.",
+      "check": {
+        "type": "action",
+        "names": [
+          "show_brush_editor"
+        ]
+      }
+    },
+    {
+      "id": "tweak-save",
+      "title": "Tweak and save",
+      "body": "In the editor, change something you can feel: the <b>Size</b> curve under pressure, or the tip's spacing. Then click <b>Save New Brush Preset</b> and give it your name.",
+      "check": {
+        "type": "preset_added"
+      },
+      "hint": "Overwrite Brush saves over the original. Save New keeps the original safe."
+    },
+    {
+      "id": "popup",
+      "title": "The pop-up palette",
+      "body": "Right-click on the canvas (or your pen's barrel button). The pop-up palette: a ring of favorite brushes, a color wheel, and recent colors. Click anywhere to close it.",
+      "check": {
+        "type": "flag",
+        "name": "popup"
+      },
+      "hint": "Pen button does nothing? Map it to right-click in your tablet driver."
+    },
+    {
+      "id": "favorites",
+      "title": "Favorites",
+      "body": "The ring shows the brushes in your <b>favorite</b> tag. In Brush Presets, right-click a preset and assign it to a tag, then choose which tag the pop-up shows in Settings > Configure Krita > General > Miscellaneous (pop-up palette).",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "buttons",
+      "title": "Your pen buttons",
+      "body": "Two barrel buttons are prime real estate. Common choices: right-click (pop-up palette) and middle-click (pan). Set them in your tablet driver. Krita's own mapping lives in Settings > Configure Krita > Canvas Input Settings.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "18 cleared",
+      "body": "Your brushes, your ring, your buttons. The tools fit your hand now.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

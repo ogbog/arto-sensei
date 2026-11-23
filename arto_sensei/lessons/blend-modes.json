@@ -1,0 +1,85 @@
+{
+  "id": "blend-modes",
+  "title": "19 Blend modes, brushes and layers",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "How colors meet",
+      "body": "A blend mode decides how new color meets old color. The <b>brush</b> has one (top toolbar dropdown), and every <b>layer</b> has one (Layers docker dropdown).",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Blend Modes"
+        },
+        {
+          "do": "paint_blob",
+          "name": "Apple"
+        },
+        "practice_layer"
+      ]
+    },
+    {
+      "id": "brush-multiply",
+      "title": "Multiply brush",
+      "body": "Press {key:Select Multiply Blending Mode|Alt+Shift+M}. Paint a soft gray over the apple: it darkens like a transparent marker.",
+      "check": {
+        "type": "brush_blend",
+        "mode": "multiply"
+      }
+    },
+    {
+      "id": "brush-normal",
+      "title": "Back to normal",
+      "body": "Press {key:Select Normal Blending Mode|Alt+Shift+N}. Always check this dropdown when a brush acts weird.",
+      "check": {
+        "type": "brush_blend",
+        "mode": "normal"
+      }
+    },
+    {
+      "id": "layer-multiply",
+      "title": "Multiply layer",
+      "body": "New layer, then set its blend mode to <b>Multiply</b> in the Layers docker. Paint shadows. Change your mind later with one dropdown.",
+      "check": {
+        "type": "node",
+        "created": true,
+        "blend": "multiply"
+      }
+    },
+    {
+      "id": "layer-light",
+      "title": "Light it up",
+      "body": "New layer set to <b>Screen</b> or <b>Addition</b>. Paint a warm glow. Light adds, shadow multiplies.",
+      "check": {
+        "type": "node",
+        "created": true,
+        "blend": [
+          "screen",
+          "add"
+        ]
+      }
+    },
+    {
+      "id": "layer-overlay",
+      "title": "Overlay for color",
+      "body": "One more: <b>Overlay</b>. Paint saturated color over everything to tint the mood without killing the values.",
+      "check": {
+        "type": "node",
+        "created": true,
+        "blend": "overlay"
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "19 cleared",
+      "body": "Multiply darkens, Screen and Addition lighten, Overlay tints. Brush or layer, same logic.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

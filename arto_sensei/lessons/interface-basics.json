@@ -1,0 +1,122 @@
+{
+  "id": "interface-basics",
+  "title": "01 Interface basics",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Five neighborhoods",
+      "body": "Krita's window has five neighborhoods. Don't memorize them, just learn where to look:\n\n1. <b>Toolbox</b> (left): brushes, selections, transform, fill.\n2. <b>Tool Options</b>: settings for whatever tool is active.\n3. <b>The canvas</b> in the middle. The star of the show.\n4. <b>Dockers</b> (right): Layers, Brush Presets, color selectors. And me!\n5. <b>Toolbar and menus</b> on top: brush size, opacity, flow, blend mode.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document"
+      ]
+    },
+    {
+      "id": "brush",
+      "title": "Home base: the brush",
+      "body": "Press {key:KritaShape/KisToolBrush|B}. The Freehand Brush Tool lights up in the toolbox. Whenever you're lost, B brings you home.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaShape/KisToolBrush"
+        ]
+      },
+      "praise": "Home sweet home."
+    },
+    {
+      "id": "move",
+      "title": "The Move tool",
+      "body": "Press {key:KritaTransform/KisToolMove|T} for the Move tool, then drag on the canvas. It slides the whole active layer.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaTransform/KisToolMove"
+        ]
+      },
+      "setup": [
+        "practice_layer"
+      ]
+    },
+    {
+      "id": "fill",
+      "title": "The Fill tool",
+      "body": "Press {key:KritaFill/KisToolFill|F}: the paint bucket. We'll use it for flats later.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaFill/KisToolFill"
+        ]
+      }
+    },
+    {
+      "id": "sampler",
+      "title": "The Color Sampler",
+      "body": "Press {key:KritaSelected/KisToolColorSampler|P}: the eyedropper. Click any color on the canvas to grab it.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaSelected/KisToolColorSampler"
+        ]
+      }
+    },
+    {
+      "id": "back-home",
+      "title": "Back to the brush",
+      "body": "And {key:KritaShape/KisToolBrush|B} again. Brush, move, fill, sample, brush. That's 80% of a painting day.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaShape/KisToolBrush"
+        ]
+      }
+    },
+    {
+      "id": "presets",
+      "title": "Brush Presets",
+      "body": "Press {key:show_brush_presets|F6} to pop up the Brush Presets. The same list lives in a docker: Settings > Dockers > Brush Presets.",
+      "check": {
+        "type": "any",
+        "checks": [
+          {
+            "type": "action",
+            "names": [
+              "show_brush_presets"
+            ]
+          },
+          {
+            "type": "docker_visible",
+            "name": "brush presets"
+          }
+        ]
+      }
+    },
+    {
+      "id": "layers",
+      "title": "Find the Layers docker",
+      "body": "Make sure the <b>Layers</b> docker is showing. Missing? Settings > Dockers > Layers. We'll live in it from lesson 07 on.",
+      "check": {
+        "type": "docker_visible",
+        "name": "layers"
+      }
+    },
+    {
+      "id": "rescue",
+      "title": "The rescue button",
+      "body": "Dockers flying everywhere? <b>Window > Workspace > Default</b> puts the furniture back. Every student breaks their workspace once. Now you know the fix.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "01 cleared",
+      "body": "Toolbox, options, canvas, dockers, menus. Plus B, T, F, P and the rescue button.\n\nNext: moving around the canvas like you own it.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

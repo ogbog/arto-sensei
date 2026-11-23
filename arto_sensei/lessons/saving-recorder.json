@@ -1,0 +1,85 @@
+{
+  "id": "saving-recorder",
+  "title": "23 Saving, backups and the Recorder",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Never lose a painting",
+      "body": "Somebody always loses a painting. Not you.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document"
+      ]
+    },
+    {
+      "id": "save-kra",
+      "title": "Save as .kra",
+      "body": "Press {key:file_save|Ctrl+S} and save as a <b>.kra</b> file. KRA keeps every layer, mask and setting. PNG and JPG flatten everything.",
+      "check": {
+        "type": "doc_saved",
+        "ext": ".kra"
+      }
+    },
+    {
+      "id": "incremental",
+      "title": "Incremental versions",
+      "body": "Press {key:save_incremental_version|Ctrl+Alt+S}. Krita saves painting_001.kra, then _002, and so on. A time machine for your process.",
+      "check": {
+        "type": "action",
+        "names": [
+          "save_incremental_version"
+        ]
+      }
+    },
+    {
+      "id": "export",
+      "title": "Export for sharing",
+      "body": "<b>File > Export</b> to make a PNG for the web, the LMS or a game engine. The .kra stays your master.",
+      "check": {
+        "type": "action",
+        "names": [
+          "file_export_file"
+        ]
+      }
+    },
+    {
+      "id": "recorder",
+      "title": "The Recorder",
+      "body": "Open <b>Settings > Dockers > Recorder</b> and press record. Krita captures your painting as you go, and exports a timelapse. Great for portfolios and for seeing your own process.",
+      "check": {
+        "type": "any",
+        "checks": [
+          {
+            "type": "action",
+            "names": [
+              "recorder_record_toggle"
+            ]
+          },
+          {
+            "type": "docker_visible",
+            "name": "recorder"
+          }
+        ]
+      }
+    },
+    {
+      "id": "autosave",
+      "title": "Autosave",
+      "body": "Settings > Configure Krita > General > File Handling: autosave every few minutes. Turn it on. Thank me later.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "23 cleared",
+      "body": ".kra masters, incremental versions, exports, timelapses, autosave. Bulletproof.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "id": "view-navigation",
+  "title": "02 View navigation",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "The paper moves, not you",
+      "body": "On a desk you slide, turn and lean over your paper all day. In Krita the view does that for you. Zoom, pan, rotate and mirror never change your painting, only how you look at it.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document",
+        "reset_view"
+      ]
+    },
+    {
+      "id": "zoom",
+      "title": "Zoom",
+      "body": "Roll the mouse wheel over the canvas, tap <b>+</b> and <b>-</b>, or hold <b>Ctrl+Space</b> and drag the pen up and down. Get way in close.",
+      "check": {
+        "type": "zoom_changed",
+        "factor": 1.5
+      },
+      "hint": "Menu keys work too: {key:view_zoom_in|Ctrl+=} and {key:view_zoom_out|Ctrl+-}."
+    },
+    {
+      "id": "pan",
+      "title": "Pan",
+      "body": "Hold <b>Space</b> and drag with the pen. You're sliding the paper across the desk.",
+      "check": {
+        "type": "panned",
+        "pixels": 120
+      },
+      "hint": "Middle mouse drag works too. Keep the pen over the canvas when you press Space."
+    },
+    {
+      "id": "rotate",
+      "title": "Turn the paper",
+      "body": "Hold <b>Shift+Space</b> and drag in a circle, or tap <b>4</b> and <b>6</b> to turn in steps. Painters turn their paper constantly so every stroke falls in the comfortable direction for their arm.",
+      "check": {
+        "type": "rotated",
+        "degrees": 20
+      },
+      "hint": "The menu versions are {key:rotate_canvas_left|Ctrl+[} and {key:rotate_canvas_right|Ctrl+]}."
+    },
+    {
+      "id": "unrotate",
+      "title": "Straighten up",
+      "body": "I just tipped your canvas. Press <b>5</b> to snap it back to level.",
+      "check": {
+        "type": "rotation_is",
+        "degrees": 0,
+        "tolerance": 0.5
+      },
+      "setup": [
+        {
+          "do": "rotate_view",
+          "degrees": 35
+        }
+      ],
+      "praise": "Level. Like a gallery wall."
+    },
+    {
+      "id": "mirror",
+      "title": "The painter's mirror",
+      "body": "Press {key:mirror_canvas|M}. Your drawing flips left to right.\n\nOld masters checked their work in a hand mirror because a flip shows you mistakes your brain has stopped seeing. Do this every few minutes. Seriously.",
+      "check": {
+        "type": "mirrored",
+        "value": true
+      },
+      "praise": "Fresh eyes, instantly."
+    },
+    {
+      "id": "unmirror",
+      "title": "Flip back",
+      "body": "Same key, {key:mirror_canvas|M}, flips you back.",
+      "check": {
+        "type": "mirrored",
+        "value": false
+      }
+    },
+    {
+      "id": "fit",
+      "title": "Lost? Number keys",
+      "body": "I zoomed you way in. The number keys are your compass:\n\n<b>1</b> = 100%, real pixels\n<b>2</b> = fit the whole page\n<b>3</b> = fit the width\n\nTry 2.",
+      "check": {
+        "type": "zoom_changed",
+        "direction": "out",
+        "factor": 1.5
+      },
+      "setup": [
+        {
+          "do": "zoom_view",
+          "level": 4.0
+        }
+      ],
+      "hint": "Also in the menu: View > Zoom. {key:zoom_to_100pct|Ctrl+0} is the menu shortcut for 100%."
+    },
+    {
+      "id": "canvas-only",
+      "title": "Canvas only",
+      "body": "Press {key:view_show_canvas_only|Tab}. Everything vanishes, including me. Pure painting.\n\nPress it again to bring me back.",
+      "check": {
+        "type": "action",
+        "names": [
+          "view_show_canvas_only"
+        ]
+      },
+      "praise": "Welcome back."
+    },
+    {
+      "id": "cleared",
+      "title": "02 cleared",
+      "body": "Zoom, pan, turn, level, mirror, fit, hide. That's the whole desk.\n\nPro habit: mirror check every few minutes, turn the paper for every long stroke.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

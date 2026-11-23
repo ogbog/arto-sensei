@@ -1,0 +1,53 @@
+{
+  "id": "value-5-scale",
+  "title": "14 Value 5: the ten-step scale, by eye",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "No answer key",
+      "body": "The classic atelier exercise. Ten boxes, black to white, even steps. No reference row this time. Your eyes are the only meter.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Value Scale",
+          "mode": "blank",
+          "clear": true
+        },
+        {
+          "do": "fg_gray",
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "id": "scale",
+      "title": "Paint the scale",
+      "body": "Use any method from lessons 10 to 13. Squint. Mirror ({key:mirror_canvas|M}) to check the steps feel even.",
+      "check": {
+        "type": "value_boxes",
+        "tol": 0.1
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Value Scale",
+          "mode": "blank",
+          "clear": false
+        }
+      ],
+      "praise": "A real value scale. Frame it."
+    },
+    {
+      "id": "cleared",
+      "title": "14 cleared",
+      "body": "If you can paint ten even steps, you can paint anything in black and white. Color is just value wearing a costume.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

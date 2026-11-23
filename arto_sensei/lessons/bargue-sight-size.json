@@ -1,0 +1,102 @@
+{
+  "id": "bargue-sight-size",
+  "title": "16 Technique: Bargue sight-size setup",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Sight size",
+      "body": "Sight size is how ateliers have taught drawing since the 1800s: the model and your drawing sit side by side at the <b>same size</b>, so you can compare them directly, shape for shape, without doing math.\n\nCharles Bargue's drawing course (1860s, with Gerome) is the classic path: 197 plates, Van Gogh copied them. They're public domain.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "plate",
+      "title": "Load a plate",
+      "body": "Press a button below. You'll get a canvas with the plate on the left, blank paper on the right, exactly the same size, and your drawing layer (<b>Copy</b>) ready.",
+      "check": {
+        "type": "reference_loaded"
+      },
+      "buttons": [
+        {
+          "label": "Load a random Bargue plate",
+          "setup": [
+            {
+              "do": "reference_doc",
+              "set": "bargue"
+            }
+          ]
+        },
+        {
+          "label": "Pick my own image...",
+          "setup": [
+            {
+              "do": "reference_doc",
+              "pick": true
+            }
+          ]
+        }
+      ],
+      "hint": "No plates yet? Dojo tab > Public-domain library > Bargue > Download."
+    },
+    {
+      "id": "grid",
+      "title": "A light grid",
+      "body": "Toggle the grid with {key:view_grid|Ctrl+Shift+'}. It helps you see where things land. Many ateliers frown on grids; use it to check, not to copy.",
+      "check": {
+        "type": "action_checked",
+        "name": "view_grid",
+        "value": true
+      }
+    },
+    {
+      "id": "extremes",
+      "title": "Mark the extremes",
+      "body": "On the Copy layer, put four tiny ticks: the plate's top, bottom, far left and far right, transferred to your side. This is the box everything lives in.",
+      "check": {
+        "type": "stroke_count",
+        "count": 4,
+        "min_length_mm": 2
+      },
+      "quiet": true
+    },
+    {
+      "id": "plumb",
+      "title": "Plumb lines",
+      "body": "Grab the <b>Line Tool</b> from the toolbox and draw a straight vertical through a key point. What else sits on that line in the plate? Check yours.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaShape/KisToolLine"
+        ]
+      }
+    },
+    {
+      "id": "two-views",
+      "title": "Near and far",
+      "body": "<b>Window > New View</b> on this same document, then <b>Window > Tile</b>. Zoom one view in for detail and keep the other fitted (<b>2</b>) to judge the whole. Like stepping back from the easel.",
+      "check": {
+        "type": "views",
+        "min": 2
+      }
+    },
+    {
+      "id": "mirror",
+      "title": "Mirror check",
+      "body": "Flip with {key:mirror_canvas|M}. Errors jump out. Flip back when you've spotted one.",
+      "check": {
+        "type": "mirrored",
+        "value": true
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "16 cleared",
+      "body": "Plate left, paper right, same size, extremes, plumb lines, two views, mirror.\n\nNow copy. Big shapes first, then smaller, then smaller.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

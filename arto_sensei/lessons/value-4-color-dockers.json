@@ -1,0 +1,67 @@
+{
+  "id": "value-4-color-dockers",
+  "title": "13 Value 4: picking value with color dockers",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Picking on purpose",
+      "body": "Krita's color dockers let you pick a value on purpose instead of by eye. Open <b>Settings > Dockers > Advanced Color Selector</b> if it isn't showing.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Value Ladder",
+          "mode": "ladder",
+          "clear": false
+        },
+        {
+          "do": "fg_gray",
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "id": "seventy",
+      "title": "70% gray",
+      "body": "In the Advanced Color Selector, click a pure gray at about <b>70%</b>. Keep it gray, no color.",
+      "check": {
+        "type": "fg_value",
+        "value": 0.7,
+        "tol": 0.04,
+        "max_sat": 0.08
+      }
+    },
+    {
+      "id": "exact",
+      "title": "Exactly 20%",
+      "body": "Now open <b>Settings > Dockers > Specific Color Selector</b>. Switch it to HSV if needed, set saturation to 0 and value to <b>20</b>. Typed, not guessed.",
+      "check": {
+        "type": "fg_value",
+        "value": 0.2,
+        "tol": 0.02,
+        "max_sat": 0.03
+      }
+    },
+    {
+      "id": "sample-swatch",
+      "title": "Steal from the ladder",
+      "body": "Press {key:KritaSelected/KisToolColorSampler|P} and click the <b>56%</b> swatch in the top row.",
+      "check": {
+        "type": "fg_value",
+        "value": 0.556,
+        "tol": 0.025
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "13 cleared",
+      "body": "By eye, by number, by sampling. Three ways to land a value.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

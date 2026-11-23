@@ -1,0 +1,88 @@
+{
+  "id": "alpha-lock-clipping",
+  "title": "09 Alpha lock, inherit alpha, quick clipping",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Paint inside the lines, for free",
+      "body": "Three ways to keep paint inside a shape. I made you an apple.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Clipping"
+        },
+        {
+          "do": "paint_blob",
+          "name": "Apple"
+        }
+      ]
+    },
+    {
+      "id": "alpha-lock",
+      "title": "Alpha lock",
+      "body": "Click the <b>checkerboard</b> icon on the Apple layer (Lock Alpha). Now paint a big shine across it: the paint stays on the apple, never on the background.",
+      "check": {
+        "type": "node",
+        "name_contains": "Apple",
+        "alpha_locked": true
+      }
+    },
+    {
+      "id": "unlock",
+      "title": "Unlock",
+      "body": "Click the checkerboard again to free it.",
+      "check": {
+        "type": "node",
+        "name_contains": "Apple",
+        "alpha_locked": false
+      }
+    },
+    {
+      "id": "inherit",
+      "title": "Inherit alpha (clipping)",
+      "body": "Add a new layer above Apple, then click its <b>alpha</b> icon (Inherit Alpha). Paint a shadow: it only shows where the apple is, and the shadow stays on its own editable layer.",
+      "check": {
+        "type": "node",
+        "node_type": "paintlayer",
+        "created": true,
+        "inherit_alpha": true
+      },
+      "hint": "Inherit alpha clips to everything below it in the same group. That's why the next card matters."
+    },
+    {
+      "id": "quick-clip",
+      "title": "Quick clipping group",
+      "body": "Select Apple and press {key:create_quick_clipping_group|Ctrl+Shift+G}. Krita builds a group with Apple at the bottom and a clipped layer on top, ready to paint. One key, whole setup.",
+      "check": {
+        "type": "any",
+        "checks": [
+          {
+            "type": "action",
+            "names": [
+              "create_quick_clipping_group"
+            ]
+          },
+          {
+            "type": "node",
+            "node_type": "paintlayer",
+            "inherit_alpha": true,
+            "parent_type": "grouplayer",
+            "created": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "09 cleared",
+      "body": "Alpha lock for quick fixes, inherit alpha for separate shading layers, Ctrl+Shift+G to build it in one shot. Lesson 17 runs on this.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

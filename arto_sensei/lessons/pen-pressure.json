@@ -1,0 +1,98 @@
+{
+  "id": "pen-pressure",
+  "title": "04 Pen pressure and speed",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "A dimmer, not a light switch",
+      "body": "Your pen isn't on or off. It's a dimmer switch. I've picked a brush where pressure changes size AND darkness, so you can see every ounce.\n\nEvery test here is graded against your own feather and lean from lesson 00. Skipped it? I'll use a generic range.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document",
+        {
+          "do": "practice_layer",
+          "clear": true
+        },
+        "pressure_brush"
+      ]
+    },
+    {
+      "id": "crescendo",
+      "title": "Crescendo",
+      "body": "One stroke, at least 4 cm. Start feather light and press harder the whole way, ending heavy.\n\nOn the seismograph, the ember should climb like a ramp.",
+      "check": {
+        "type": "stroke",
+        "criteria": {
+          "source": "tablet",
+          "min_length_mm": 40,
+          "ramp_min": 0.6,
+          "pressure_span_min": 0.5
+        }
+      }
+    },
+    {
+      "id": "swell",
+      "title": "Thin, THICK, thin",
+      "body": "The ink line every comic inker dreams about. Land soft, swell in the middle, lift off soft. Think of a plane touching down and taking off again.",
+      "check": {
+        "type": "stroke",
+        "criteria": {
+          "source": "tablet",
+          "min_length_mm": 40,
+          "taper": true
+        }
+      },
+      "hint": "Keep moving while you lift. Stopping and then lifting leaves a blob."
+    },
+    {
+      "id": "even",
+      "title": "Hold it steady",
+      "body": "Now the hardest one: the same pressure for the whole stroke, at least 6 cm. The ember should be a flat plateau.",
+      "check": {
+        "type": "stroke",
+        "criteria": {
+          "source": "tablet",
+          "min_length_mm": 60,
+          "pressure_cv_max": 0.12
+        }
+      },
+      "praise": "Flat as a tabletop."
+    },
+    {
+      "id": "slow",
+      "title": "Slow is control",
+      "body": "Draw a slow, careful stroke, under 50 mm per second. Like tracing a contour you really care about.",
+      "check": {
+        "type": "stroke",
+        "criteria": {
+          "min_length_mm": 40,
+          "speed_mm_s_max": 50
+        }
+      }
+    },
+    {
+      "id": "fast",
+      "title": "Fast is straight",
+      "body": "Now flick! Over 200 mm per second. Fast strokes come out straighter and more confident than slow ones. Commit.",
+      "check": {
+        "type": "stroke",
+        "criteria": {
+          "min_length_mm": 50,
+          "speed_mm_s_min": 200,
+          "straightness_min": 0.9
+        }
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "04 cleared",
+      "body": "Crescendo, swell, plateau, slow, fast. Your hand knows five new things.\n\nThese all live in the <b>Dojo</b> as drills with scores and streaks. Warm up with two minutes of them every session.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

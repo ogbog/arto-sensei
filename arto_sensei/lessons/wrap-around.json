@@ -1,0 +1,62 @@
+{
+  "id": "wrap-around",
+  "title": "22 Wrap-around mode for tileable textures",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Seamless, on purpose",
+      "body": "Game textures repeat. Wrap-around mode tiles your canvas infinitely while you paint, so seams show up while you can still fix them.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Tile",
+          "w": 1024,
+          "h": 1024
+        },
+        "practice_layer",
+        "pressure_brush"
+      ]
+    },
+    {
+      "id": "on",
+      "title": "Turn it on",
+      "body": "Press {key:wrap_around_mode|Shift+W}. Zoom out ({key:view_zoom_out|-}) to see the tiles.",
+      "check": {
+        "type": "wrap_around",
+        "value": true
+      }
+    },
+    {
+      "id": "paint",
+      "title": "Paint across the seams",
+      "body": "Twenty marks: bricks, leaves, scales, anything. Paint right across the edges; they wrap to the other side.",
+      "check": {
+        "type": "stroke_count",
+        "count": 20,
+        "min_length_mm": 5
+      },
+      "quiet": true
+    },
+    {
+      "id": "off",
+      "title": "Turn it off",
+      "body": "Shift+W again. Your texture tiles perfectly in any game engine.",
+      "check": {
+        "type": "wrap_around",
+        "value": false
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "22 cleared",
+      "body": "Wrap-around, paint the seams, export. That's a game-ready texture.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

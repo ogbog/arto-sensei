@@ -1,0 +1,80 @@
+{
+  "id": "value-1-buildup",
+  "title": "10 Value 1: building opacity",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Value is light and dark",
+      "body": "Value is how light or dark something is. 0% is black, 100% is white paper. The top row is the answer key. The bottom boxes are yours.\n\nThis time: build darkness by stacking see-through strokes, like layers of graphite.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Value Ladder",
+          "mode": "ladder",
+          "clear": true
+        },
+        {
+          "do": "fg_gray",
+          "value": 0.0
+        },
+        {
+          "do": "brush",
+          "preset": "b) Basic-2 Opacity",
+          "opacity": 0.15
+        }
+      ]
+    },
+    {
+      "id": "first-three",
+      "title": "The dark end",
+      "body": "Fill boxes 1, 2 and 3 (0%, 11%, 22%) by stroking over and over with the 15% brush. Box 1 needs a lot of passes.",
+      "check": {
+        "type": "value_boxes",
+        "indices": [
+          0,
+          1,
+          2
+        ],
+        "tol": 0.08
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Value Ladder",
+          "mode": "ladder",
+          "clear": false
+        }
+      ]
+    },
+    {
+      "id": "all",
+      "title": "The whole ladder",
+      "body": "Now all ten. Box 10 is the paper itself: leave it alone.",
+      "check": {
+        "type": "value_boxes",
+        "tol": 0.08
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Value Ladder",
+          "mode": "ladder",
+          "clear": false
+        }
+      ],
+      "praise": "Ten steps, built by hand."
+    },
+    {
+      "id": "cleared",
+      "title": "10 cleared",
+      "body": "Darkness by layering. Same idea as graphite, charcoal, or ink washes.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

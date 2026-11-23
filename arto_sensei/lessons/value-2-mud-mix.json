@@ -1,0 +1,127 @@
+{
+  "id": "value-2-mud-mix",
+  "title": "11 Value 2: blend, mud mix, pick",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Make your grays",
+      "body": "Painters mix grays on the palette. Here's the digital version: paint black and white side by side, smear them together, then pick the gray you need out of the smear.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Mud Mix",
+          "mode": "ladder",
+          "clear": true
+        },
+        {
+          "do": "fg_gray",
+          "value": 0.0
+        },
+        {
+          "do": "brush",
+          "preset": "b) Basic-1",
+          "opacity": 1.0
+        }
+      ]
+    },
+    {
+      "id": "blobs",
+      "title": "Black and white",
+      "body": "In the empty space at the bottom, paint a black blob. Press {key:toggle_fg_bg|X} and paint a white blob touching it. (Paint on the gray margin if white disappears on white.)",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "blender",
+      "title": "Grab a blender",
+      "body": "Switch to a blending brush. Pick one from Brush Presets, or let me grab one.",
+      "check": {
+        "type": "brush_changed"
+      },
+      "buttons": [
+        {
+          "label": "Give me a blending brush",
+          "setup": [
+            {
+              "do": "brush",
+              "contains": [
+                "Blender",
+                "Smudge",
+                "blend"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smear",
+      "title": "Make mud",
+      "body": "Drag back and forth across the border until you get a long smooth gradient. Somewhere in that mud is every gray you'll need.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "pick",
+      "title": "Pick about a third",
+      "body": "Hold <b>Ctrl</b> and click in the smear (or use {key:KritaSelected/KisToolColorSampler|P}) to grab a gray around <b>33%</b>.",
+      "check": {
+        "type": "fg_value",
+        "value": 0.333,
+        "tol": 0.06,
+        "max_sat": 0.1
+      }
+    },
+    {
+      "id": "box-4",
+      "title": "Paint box 4",
+      "body": "Switch back to a normal brush ({key:KritaShape/KisToolBrush|B}, Basic-1) and fill box 4 (33%) with your picked gray.",
+      "check": {
+        "type": "value_boxes",
+        "indices": [
+          3
+        ],
+        "tol": 0.07
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Mud Mix",
+          "mode": "ladder",
+          "clear": false
+        }
+      ]
+    },
+    {
+      "id": "all",
+      "title": "The whole ladder, from mud",
+      "body": "Every box, every gray picked out of your mud. Squint at the top row versus yours.",
+      "check": {
+        "type": "value_boxes",
+        "tol": 0.08
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Mud Mix",
+          "mode": "ladder",
+          "clear": false
+        }
+      ]
+    },
+    {
+      "id": "cleared",
+      "title": "11 cleared",
+      "body": "Mix, smear, pick, paint. That's how oil painters think, and it works just as well here.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

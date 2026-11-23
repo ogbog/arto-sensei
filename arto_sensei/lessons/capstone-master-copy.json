@@ -1,0 +1,106 @@
+{
+  "id": "capstone-master-copy",
+  "title": "24 Capstone: a Bargue master copy",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Everything, together",
+      "body": "Your capstone: a sight-size master copy of a Bargue plate, built with the pipeline. Take your time. This is a multi-session painting, and Sensei will wait.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "plate",
+      "title": "Choose your plate",
+      "body": "Load a plate. Pick one that scares you a little.",
+      "check": {
+        "type": "reference_loaded"
+      },
+      "buttons": [
+        {
+          "label": "Load a random Bargue plate",
+          "setup": [
+            {
+              "do": "reference_doc",
+              "set": "bargue"
+            }
+          ]
+        },
+        {
+          "label": "Pick my own image...",
+          "setup": [
+            {
+              "do": "reference_doc",
+              "pick": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "block-in",
+      "title": "Block-in",
+      "body": "On the Copy layer: extremes, plumb lines, big shapes. Thirty light, straight marks. No details yet.",
+      "check": {
+        "type": "stroke_count",
+        "count": 30,
+        "min_length_mm": 5
+      },
+      "quiet": true
+    },
+    {
+      "id": "layers",
+      "title": "Build the stack",
+      "body": "Add <b>Flats</b> (the big light and dark shapes), <b>Shadow</b> (Multiply) and <b>Paintover</b> on top, in that order.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "flats",
+          "shadow",
+          "paintover"
+        ],
+        "rules": {
+          "shadow": {
+            "blend": "multiply"
+          }
+        }
+      }
+    },
+    {
+      "id": "check",
+      "title": "Mirror check",
+      "body": "Flip it ({key:mirror_canvas|M}). Fix what jumps out. Flip back.",
+      "check": {
+        "type": "mirrored",
+        "value": true
+      }
+    },
+    {
+      "id": "save",
+      "title": "Save the master",
+      "body": "Save as .kra. Then incremental versions as you go.",
+      "check": {
+        "type": "doc_saved",
+        "ext": ".kra"
+      }
+    },
+    {
+      "id": "finish",
+      "title": "Finish and share",
+      "body": "Work until it's done. Export a PNG side by side with the plate, and a Recorder timelapse if you were recording. Bring it to class.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "24 cleared",
+      "body": "You set up a sight-size copy from a 160 year old plate, in a digital pipeline, with a trained hand.\n\nThat's the whole course. The Dojo is always open.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

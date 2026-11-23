@@ -1,0 +1,61 @@
+{
+  "id": "tablet-setup",
+  "title": "00 Tablet setup and your hand",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Hi. I'm Arto Sensei.",
+      "body": "I teach Krita the way a painter learns: a little reading, then your hand does it.\n\nNothing here is a test you can fail. Already know something? Click any card title to jump ahead. Every card is open.",
+      "check": {"type": "read"}
+    },
+    {
+      "id": "canvas",
+      "title": "Get a canvas",
+      "body": "We need paper. I'll make one if you don't have one open.",
+      "setup": ["ensure_document", "practice_layer", "pressure_brush"],
+      "check": {"type": "has_document"}
+    },
+    {
+      "id": "pen-hello",
+      "title": "Say hello with the pen",
+      "body": "Draw anything on the canvas with your pen. A squiggle is perfect.\n\nWatch the seismograph above: the ember shape is how hard you pressed, the teal line is how fast you moved.",
+      "hint": "Nothing happening? Make sure your tablet driver is running (Huion: HuionTablet app, Wacom: Wacom Tablet Properties).",
+      "check": {"type": "pen_detected"},
+      "praise": "Pen detected. We're live."
+    },
+    {
+      "id": "tablet-settings",
+      "title": "Where the tablet settings live",
+      "body": "Settings > Configure Krita > Tablet Settings has two things to know:\n\n1. <b>Tablet Tester</b>: draw in it to see raw pressure. Great for blaming hardware instead of yourself.\n2. <b>Input pressure global curve</b>: if you have to stomp to get a dark line, bend this curve up. If everything is dark, bend it down.\n\nOn Windows you can also switch between WinTab and Windows Ink. If pressure feels broken, try the other one and restart Krita.",
+      "check": {"type": "read"}
+    },
+    {
+      "id": "feather",
+      "title": "Your feather",
+      "body": "Draw one long line (3 cm or more) as lightly as you can while still leaving a mark. Barely kiss the surface.",
+      "setup": ["practice_layer"],
+      "check": {"type": "calibrate", "which": "light"}
+    },
+    {
+      "id": "lean",
+      "title": "Your lean",
+      "body": "Same long line, but now real pressure. Firm, confident, not tablet-breaking.\n\nThe two dashed lines on the seismograph will become YOUR range. Every pressure test after this is graded against your hand, not mine.",
+      "check": {"type": "calibrate", "which": "heavy"}
+    },
+    {
+      "id": "real-estate",
+      "title": "Use the whole tablet",
+      "body": "Most beginners draw from the wrist in a postage stamp. Your tablet is a whole tabletop!\n\nDraw one big stroke from corner to corner. Swing from the elbow and shoulder, not the fingers.",
+      "hint": "If you can't reach, your tablet may be mapped to the wrong area. Check the driver's work area / screen mapping.",
+      "check": {"type": "stroke", "criteria": {"source": "tablet", "min_extent_frac": 0.6}},
+      "praise": "THAT is a painter's stroke."
+    },
+    {
+      "id": "cleared",
+      "title": "00 cleared",
+      "body": "Your pen works, Krita hears it, and Sensei knows your range.\n\nNext up: view navigation. And remember the <b>Dojo</b> tab: warm up there every time you sit down.",
+      "check": {"type": "read"}
+    }
+  ]
+}

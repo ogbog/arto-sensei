@@ -1,0 +1,84 @@
+{
+  "id": "filter-layers-flats",
+  "title": "20 Filter layers, masks, fills and flats",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Non-destructive magic",
+      "body": "Filter layers and masks change how things look without touching the pixels. Delete them and the original is untouched.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Filters"
+        },
+        {
+          "do": "paint_blob",
+          "name": "Apple"
+        }
+      ]
+    },
+    {
+      "id": "filter-layer",
+      "title": "The value checker",
+      "body": "<b>Layer > New > Add Filter Layer</b>, pick <b>Desaturate</b>. Instantly your color painting is black and white. Painters keep this on top and toggle it to check values.",
+      "check": {
+        "type": "node",
+        "node_type": "filterlayer",
+        "created": true
+      }
+    },
+    {
+      "id": "filter-mask",
+      "title": "Filter mask",
+      "body": "Select Apple, then <b>Layer > New > Add Filter Mask</b> (try HSV Adjustment). The filter applies to just that one layer.",
+      "check": {
+        "type": "node",
+        "node_type": "filtermask",
+        "created": true
+      }
+    },
+    {
+      "id": "transparency-mask",
+      "title": "Transparency mask",
+      "body": "<b>Layer > New > Add Transparency Mask</b> on Apple. Paint black on the mask to hide, white to reveal. An eraser with an undo button built in.",
+      "check": {
+        "type": "node",
+        "node_type": "transparencymask",
+        "created": true
+      }
+    },
+    {
+      "id": "fill",
+      "title": "Fill tool with gap closing",
+      "body": "Press {key:KritaFill/KisToolFill|F}. In Tool Options, look for the gap-closing setting: it seals small gaps in your line art so the fill doesn't leak.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KritaFill/KisToolFill"
+        ]
+      }
+    },
+    {
+      "id": "colorize",
+      "title": "Colorize mask for flats",
+      "body": "On line art, the <b>Colorize Mask</b> lets you scribble a dab of color in each region and Krita fills the flats for you. <b>Layer > New > Add Colorize Mask</b>.",
+      "check": {
+        "type": "node",
+        "node_type": "colorizemask",
+        "created": true
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "20 cleared",
+      "body": "Filter layers, filter masks, transparency masks, gap-closing fills, colorize masks. Non-destructive is the professional default.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

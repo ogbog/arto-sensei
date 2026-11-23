@@ -1,0 +1,67 @@
+{
+  "id": "value-3-layer-opacity",
+  "title": "12 Value 3: layers with lowered opacity",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "One black, many layers",
+      "body": "Another trick: paint solid black on its own layer, then turn the <b>layer</b> opacity down. A box at 70% value needs black at 30% layer opacity. Value = 100% minus the black's opacity.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Layer Opacity",
+          "mode": "ladder",
+          "clear": true
+        },
+        {
+          "do": "fg_gray",
+          "value": 0.0
+        },
+        {
+          "do": "brush",
+          "preset": "b) Basic-1",
+          "opacity": 1.0
+        }
+      ]
+    },
+    {
+      "id": "all",
+      "title": "Ten boxes, many layers",
+      "body": "New layer ({key:add_new_paint_layer|Insert}), fill a box with black, set that layer's opacity. Repeat. You can put several boxes on one layer if they share an opacity... but none of them do!",
+      "check": {
+        "type": "all",
+        "checks": [
+          {
+            "type": "node_count",
+            "delta": 3
+          },
+          {
+            "type": "value_boxes",
+            "tol": 0.06
+          }
+        ]
+      },
+      "setup": [
+        {
+          "do": "value_ladder",
+          "name": "Sensei Layer Opacity",
+          "mode": "ladder",
+          "clear": false
+        }
+      ],
+      "hint": "Box 2 (11%) needs black at 89%. Box 5 (44%) needs 56%."
+    },
+    {
+      "id": "cleared",
+      "title": "12 cleared",
+      "body": "Layer opacity is non-destructive value: change your mind any time. Lesson 17's shadow layers work exactly like this.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

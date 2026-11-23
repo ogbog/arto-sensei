@@ -1,0 +1,181 @@
+{
+  "id": "layer-pipeline",
+  "title": "17 Technique: the layer pipeline",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "One painting, seven layers",
+      "body": "Here's a production pipeline from the bottom of the stack to the top:\n\n<b>Flats</b> (solid silhouettes)\n<b>Local</b> color (clipped to flats)\n<b>Shadow</b> (Multiply)\n<b>Contact</b> shadow (Multiply, darker, tight)\n<b>Rim</b> light (Add or Screen)\n<b>Paintover</b> (normal, on top)\n\nPlus a <b>Rough</b> sketch floating above everything at low opacity while you work.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Pipeline"
+        }
+      ]
+    },
+    {
+      "id": "rough",
+      "title": "Rough",
+      "body": "New layer named <b>Rough</b>. Sketch something simple and loose: an apple on a table, a head, a robot.",
+      "check": {
+        "type": "node",
+        "name_contains": "rough",
+        "created": true
+      }
+    },
+    {
+      "id": "flats",
+      "title": "Flats",
+      "body": "New layer <b>below</b> Rough named <b>Flats</b>. Fill the silhouette with one solid mid color. The fill tool ({key:KritaFill/KisToolFill|F}) helps.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "flats",
+          "rough"
+        ]
+      }
+    },
+    {
+      "id": "local",
+      "title": "Local color",
+      "body": "Above Flats: <b>Local</b>, with Inherit Alpha on (or Ctrl+Shift+G from lesson 09). Paint the object's real colors; they can't escape the silhouette.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "flats",
+          "local",
+          "rough"
+        ],
+        "rules": {
+          "local": {
+            "inherit_alpha": true
+          }
+        }
+      }
+    },
+    {
+      "id": "shadow",
+      "title": "Shadow",
+      "body": "Above Local: <b>Shadow</b>, blend mode <b>Multiply</b>, clipped. Paint the shadow shapes in one cool gray or purple. Multiply darkens everything under it naturally.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "flats",
+          "local",
+          "shadow"
+        ],
+        "rules": {
+          "shadow": {
+            "blend": "multiply"
+          }
+        }
+      }
+    },
+    {
+      "id": "contact",
+      "title": "Contact shadow",
+      "body": "Above Shadow: <b>Contact</b>, Multiply again. Small, dark, tight: where things touch, the table under the apple, the crease of a sleeve.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "shadow",
+          "contact"
+        ],
+        "rules": {
+          "contact": {
+            "blend": "multiply"
+          }
+        }
+      }
+    },
+    {
+      "id": "rim",
+      "title": "Rim light",
+      "body": "Above Contact: <b>Rim</b>, blend <b>Addition</b> or <b>Screen</b>. A thin bright edge on the side away from the light. Instant drama.",
+      "check": {
+        "type": "layer_stack",
+        "order": [
+          "contact",
+          "rim"
+        ],
+        "rules": {
+          "rim": {
+            "blend": [
+              "add",
+              "screen",
+              "linear_dodge",
+              "color_dodge",
+              "lighten"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "paintover",
+      "title": "Paintover",
+      "body": "On top: <b>Paintover</b>, normal mode, no clipping. Fix edges, add highlights, unify. Turn the Rough down below 50% or hide it.",
+      "check": {
+        "type": "all",
+        "checks": [
+          {
+            "type": "layer_stack",
+            "order": [
+              "flats",
+              "local",
+              "shadow",
+              "contact",
+              "rim",
+              "paintover"
+            ],
+            "rules": {
+              "shadow": {
+                "blend": "multiply"
+              },
+              "contact": {
+                "blend": "multiply"
+              },
+              "rim": {
+                "blend": [
+                  "add",
+                  "screen",
+                  "linear_dodge",
+                  "color_dodge",
+                  "lighten"
+                ]
+              }
+            }
+          },
+          {
+            "type": "any",
+            "checks": [
+              {
+                "type": "node",
+                "name_contains": "rough",
+                "opacity_max": 0.5
+              },
+              {
+                "type": "node",
+                "name_contains": "rough",
+                "visible": false
+              }
+            ]
+          }
+        ]
+      },
+      "praise": "That's a studio pipeline."
+    },
+    {
+      "id": "cleared",
+      "title": "17 cleared",
+      "body": "Every part of the painting is on its own layer, with its own blend mode, all editable. Art directors love you already.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

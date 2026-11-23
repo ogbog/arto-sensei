@@ -1,0 +1,110 @@
+{
+  "id": "selections-transform",
+  "title": "15 Selections and transform",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Fences and stretching",
+      "body": "Selections are fences: paint only lands inside them. Transform stretches, rotates and warps whatever's selected. Together they fix proportions without redrawing.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        {
+          "do": "ensure_document",
+          "name": "Sensei Selections"
+        },
+        {
+          "do": "paint_blob",
+          "name": "Apple"
+        }
+      ]
+    },
+    {
+      "id": "rect",
+      "title": "Rectangle select",
+      "body": "Press {key:KisToolSelectRectangular|Ctrl+R} and drag a box over half the apple.",
+      "check": {
+        "type": "all",
+        "checks": [
+          {
+            "type": "tool_active",
+            "ids": [
+              "KisToolSelectRectangular"
+            ]
+          },
+          {
+            "type": "has_selection"
+          }
+        ]
+      }
+    },
+    {
+      "id": "deselect",
+      "title": "Drop it",
+      "body": "Press {key:deselect|Ctrl+Shift+A} to deselect.",
+      "check": {
+        "type": "has_selection",
+        "value": false
+      }
+    },
+    {
+      "id": "lasso",
+      "title": "Lasso",
+      "body": "Find the <b>Freehand Selection</b> tool in the toolbox (the lasso). Draw a loop around the apple.",
+      "check": {
+        "type": "all",
+        "checks": [
+          {
+            "type": "tool_active",
+            "ids": [
+              "KisToolSelectOutline"
+            ]
+          },
+          {
+            "type": "has_selection"
+          }
+        ]
+      }
+    },
+    {
+      "id": "invert",
+      "title": "Invert",
+      "body": "Press {key:invert_selection|Ctrl+Shift+I}: now everything BUT the apple is selected.",
+      "check": {
+        "type": "action",
+        "names": [
+          "invert_selection"
+        ]
+      }
+    },
+    {
+      "id": "transform",
+      "title": "Transform",
+      "body": "Deselect, select the Apple layer, and press {key:KisToolTransform|Ctrl+T}. Drag a corner to squash it, outside a corner to rotate. Press <b>Enter</b> to apply.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KisToolTransform"
+        ]
+      }
+    },
+    {
+      "id": "modes",
+      "title": "Warp, liquify, perspective",
+      "body": "In Tool Options the Transform tool has modes: <b>Perspective</b>, <b>Warp</b>, <b>Cage</b>, <b>Liquify</b>, <b>Mesh</b>. Liquify is a digital nudge-the-clay tool. Perfect for fixing a jaw or an eye that wandered.",
+      "check": {
+        "type": "read"
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "15 cleared",
+      "body": "Rectangle, lasso, deselect, invert, transform, and the warp family.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

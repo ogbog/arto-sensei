@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+X-KDE-Library=arto_sensei
+X-Python-2-Compatible=false
+X-Krita-Manual=
+Name=Arto Sensei
+Comment=A docker that teaches Krita and the feel of digital painting: scrollytelling lessons, pen pressure and speed drills, and a warm-up Dojo.

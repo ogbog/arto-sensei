@@ -1,0 +1,107 @@
+{
+  "id": "hand-motion",
+  "title": "06 Hand motion control",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Rhythm before beauty",
+      "body": "Hatching is rhythm. Here I'm counting marks, not judging each one, so go fast and don't fuss. Quantity first. Quality shows up on its own.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document",
+        {
+          "do": "practice_layer",
+          "clear": true
+        },
+        "pressure_brush",
+        {
+          "do": "guides_hatching",
+          "angle": 45
+        }
+      ]
+    },
+    {
+      "id": "lanes",
+      "title": "Fill the lanes",
+      "body": "Ten lanes: start each mark on a red dot, flick it into the ring. One mark per lane.",
+      "check": {
+        "type": "stroke_count",
+        "count": 10,
+        "min_length_mm": 15
+      },
+      "quiet": true
+    },
+    {
+      "id": "metronome",
+      "title": "Metronome",
+      "body": "Twenty marks in 15 seconds, anywhere in the lanes. Tick, tick, tick. Let the shoulder do it.",
+      "check": {
+        "type": "stroke_count",
+        "count": 20,
+        "within_s": 15,
+        "min_length_mm": 10
+      },
+      "quiet": true,
+      "praise": "That's a hatching rhythm."
+    },
+    {
+      "id": "parallel",
+      "title": "Parallel",
+      "body": "Ten more, and this time keep them parallel. Lock the wrist, slide the whole arm.",
+      "check": {
+        "type": "stroke_count",
+        "count": 10,
+        "min_length_mm": 15,
+        "orientation_spread_max": 8
+      },
+      "quiet": true
+    },
+    {
+      "id": "cross",
+      "title": "Crosshatch",
+      "body": "New lanes at the opposite angle, right over your first set. Ten marks. Crosshatching is just two rhythms stacked.",
+      "check": {
+        "type": "stroke_count",
+        "count": 10,
+        "min_length_mm": 15
+      },
+      "quiet": true,
+      "setup": [
+        {
+          "do": "guides_hatching",
+          "angle": 135
+        }
+      ]
+    },
+    {
+      "id": "ghost",
+      "title": "Ghosting: five confident lines",
+      "body": "Pick two points. Hover above the canvas and rehearse the motion three times without touching. Then put it down in one smooth pass.\n\nFive of those in a row, each fast and straight.",
+      "check": {
+        "type": "stroke",
+        "count": 5,
+        "criteria": {
+          "min_length_mm": 50,
+          "speed_mm_s_min": 120,
+          "straightness_min": 0.96
+        }
+      },
+      "setup": [
+        "clear_guides"
+      ],
+      "hint": "The rehearsal is the trick. Your arm learns the path before the pen commits.",
+      "praise": "Five for five. That's a trained arm."
+    },
+    {
+      "id": "cleared",
+      "title": "06 cleared",
+      "body": "Lanes, metronome, parallel, crosshatch, ghosting.\n\nThe Dojo's <b>Rhythm</b> drill counts clean marks in 10 seconds. Beat your best every morning.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}

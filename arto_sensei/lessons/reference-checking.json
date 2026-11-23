@@ -1,0 +1,88 @@
+{
+  "id": "reference-checking",
+  "title": "21 Reference, mirror, second view, grids",
+  "license": "CC BY 4.0, Oscar Baechler",
+  "bites": [
+    {
+      "id": "welcome",
+      "title": "Check your work like a pro",
+      "body": "Every working artist has a checking routine. Here's a toolkit for yours.",
+      "check": {
+        "type": "read"
+      },
+      "setup": [
+        "ensure_document"
+      ]
+    },
+    {
+      "id": "reference-tool",
+      "title": "Reference images",
+      "body": "Pick the <b>Reference Images</b> tool from the toolbox and paste or open a reference. It floats over the canvas, never prints, and saves with the file.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "ToolReferenceImages"
+        ]
+      }
+    },
+    {
+      "id": "second-view",
+      "title": "A second view",
+      "body": "<b>Window > New View</b>, then <b>Window > Tile</b>. Keep one view small: a thumbnail tells the truth about composition.",
+      "check": {
+        "type": "views",
+        "min": 2
+      }
+    },
+    {
+      "id": "grid-on",
+      "title": "Grid",
+      "body": "Toggle the grid: {key:view_grid|Ctrl+Shift+'}.",
+      "check": {
+        "type": "action_checked",
+        "name": "view_grid",
+        "value": true
+      }
+    },
+    {
+      "id": "grid-off",
+      "title": "Grid off",
+      "body": "And off again. Check, then hide.",
+      "check": {
+        "type": "action_checked",
+        "name": "view_grid",
+        "value": false
+      }
+    },
+    {
+      "id": "assistants",
+      "title": "Painting assistants",
+      "body": "The <b>Assistant Tool</b> places perspective guides, ellipses and rulers that your brush can snap to. Pick it from the toolbox.",
+      "check": {
+        "type": "tool_active",
+        "ids": [
+          "KisAssistantTool"
+        ]
+      }
+    },
+    {
+      "id": "snap",
+      "title": "Snap on and off",
+      "body": "{key:toggle_assistant|Ctrl+Shift+L} toggles snapping to assistants. Perfect ellipses on demand.",
+      "check": {
+        "type": "action",
+        "names": [
+          "toggle_assistant"
+        ]
+      }
+    },
+    {
+      "id": "cleared",
+      "title": "21 cleared",
+      "body": "Reference, thumbnail view, grid, assistants. Plus the mirror from lesson 02. Make it a routine.",
+      "check": {
+        "type": "read"
+      }
+    }
+  ]
+}
