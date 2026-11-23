@@ -21,7 +21,12 @@ from . import devlog
 from .qt import QtCore, Signal
 
 API = "https://commons.wikimedia.org/w/api.php"
-USER_AGENT = "ArtoSensei/1.0 (Krita teaching plugin; Seriously Open Games OER project)"
+# Wikimedia UA policy wants a contact URL or email; compliant agents get a higher rate limit.
+USER_AGENT = "ArtoSensei/1.0.1 (https://github.com/ogbog/arto-sensei; Krita teaching plugin) Python-urllib"
+# Commons only serves these thumbnail widths cheaply; anything else is strictly rate limited (HTTP 429).
+THUMB_WIDTH = "1280"
+PACE_S = 2.0
+MAX_RETRIES = 3
 EXTS = (".png", ".jpg", ".jpeg", ".tif", ".tiff", ".webp")
 FREE = re.compile(r"public domain|^pd\b|^pd-|cc0|cc-zero", re.I)
 
@@ -81,10 +86,25 @@ def credit_for(path):
         return None
 
 
-def _get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=40) as r:
-        return r.read()
+def _get(url, on_wait=None):
+    """GET with polite retries: on HTTP 429/503 honor Retry-After (or back off) and try again."""
+    import urllib.error
+    for attempt in range(MAX_RETRIES + 1):
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Api-User-Agent": USER_AGENT})
+        try:
+            with urllib.request.urlopen(req, timeout=40) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 503) or attempt == MAX_RETRIES:
+                raise
+            try:
+                wait = int(e.headers.get("Retry-After", "0"))
+            except ValueError:
+                wait = 0
+            wait = max(wait, 15 * (attempt + 1))
+            if on_wait:
+                on_wait(wait)
+            time.sleep(wait)
 
 
 def _strip(html):
@@ -117,9 +137,10 @@ class Downloader(QtCore.QThread):
                     credits = json.load(f)
             q = {"action": "query", "format": "json", "generator": "search", "gsrnamespace": "6",
                  "gsrsearch": SETS[self.key][1], "gsrlimit": "50", "prop": "imageinfo",
-                 "iiprop": "url|extmetadata|mime|size", "iiurlwidth": "1600"}
+                 "iiprop": "url|extmetadata|mime|size", "iiurlwidth": THUMB_WIDTH}
             self.progress.emit("Searching Wikimedia Commons...")
-            data = json.loads(_get(API + "?" + urllib.parse.urlencode(q)).decode("utf-8"))
+            waiting = lambda s: self.progress.emit("Commons asked us to slow down. Waiting %d s, then continuing..." % s)
+            data = json.loads(_get(API + "?" + urllib.parse.urlencode(q), waiting).decode("utf-8"))
             pages = sorted(data.get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 0))
             for page in pages:
                 if got >= self.limit or self.isInterruptionRequested():
@@ -140,10 +161,10 @@ class Downloader(QtCore.QThread):
                 dest = os.path.join(self.folder, name)
                 if not os.path.exists(dest):
                     self.progress.emit("Downloading %d: %s" % (got + 1, name[:50]))
-                    blob = _get(url)
+                    blob = _get(url, waiting)
                     with open(dest, "wb") as f:
                         f.write(blob)
-                    time.sleep(1.0)  # be a polite guest on Commons
+                    time.sleep(PACE_S)  # be a polite guest on Commons
                 credits[name] = {
                     "title": page.get("title"),
                     "artist": _strip(meta.get("Artist", {}).get("value")),
@@ -151,10 +172,14 @@ class Downloader(QtCore.QThread):
                     "source": info.get("descriptionurl"),
                 }
                 got += 1
-            with open(cred_path, "w", encoding="utf-8") as f:
-                json.dump(credits, f, indent=2, ensure_ascii=False)
+                with open(cred_path, "w", encoding="utf-8") as f:  # save as we go: a stop keeps credits
+                    json.dump(credits, f, indent=2, ensure_ascii=False)
             self.progress.emit("%s: %d public-domain images ready." % (label(self.key), got))
         except Exception as e:
             devlog.log_exc("library download %s" % self.key)
-            self.progress.emit("Download stopped: %s" % e)
+            if "429" in str(e):
+                self.progress.emit("Commons is busy (too many requests). Kept %d images; click Download again "
+                                   "in a few minutes to resume." % got)
+            else:
+                self.progress.emit("Download stopped after %d images: %s" % (got, e))
         self.finished_set.emit(self.key, got)

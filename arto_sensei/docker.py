@@ -24,7 +24,7 @@ from .widgets import Card, Seismograph, INK, EMBER, TEAL, GOLD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LESSON_DIR = os.path.join(HERE, "lessons")
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 PRAISE = ("Nailed it.", "Clean!", "That's the stuff.", "Your hand just learned something.",
           "Sargent would nod. Probably.", "Yes. Exactly that.")
 

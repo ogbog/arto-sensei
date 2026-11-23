@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 (2026-11-23)
+
+- Library downloads no longer trip Wikimedia's HTTP 429: thumbnails use the standard 1280 px width,
+  the User-Agent carries the project URL per Wikimedia policy, 429/503 responses back off and retry
+  (honoring Retry-After), downloads are paced 2 s apart, and credits are saved after every image so
+  a stopped download resumes where it left off.
+
 ## 1.0.0 (2026-11-23)
 
 First release.
