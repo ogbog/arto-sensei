@@ -14,7 +14,7 @@
     {
       "id": "plate",
       "title": "Load a plate",
-      "body": "Press a button below. You'll get a canvas with the plate on the left, blank paper on the right, exactly the same size, and your drawing layer (<b>Copy</b>) ready.",
+      "body": "Press a button below. You'll get a canvas with the plate on one side, blank paper on the other, exactly the same size, and your drawing layer (<b>Copy</b>) ready.\n\nLeft-handed? Put the plate on the <b>right</b> so your hand never covers it: use the swap button, or tick <b>Lefty layout</b> in the Dojo once and every plate and pose follows.",
       "check": {
         "type": "reference_loaded"
       },
@@ -36,9 +36,15 @@
               "pick": true
             }
           ]
+        },
+        {
+          "label": "Swap reference and drawing sides (lefty)",
+          "setup": [
+            "flip_reference"
+          ]
         }
       ],
-      "hint": "No plates yet? Dojo tab > Public-domain library > Bargue > Download."
+      "hint": "No plates yet? Dojo tab > Public-domain library > Bargue drawing course plates > Download. Or type any pre-1930 artist into Find artist."
     },
     {
       "id": "grid",

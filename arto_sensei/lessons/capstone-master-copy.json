@@ -36,6 +36,12 @@
               "pick": true
             }
           ]
+        },
+        {
+          "label": "Swap reference and drawing sides (lefty)",
+          "setup": [
+            "flip_reference"
+          ]
         }
       ]
     },

@@ -27,6 +27,11 @@ ALIGN_CENTER = E(Qt, "AlignmentFlag", "AlignCenter")
 SMOOTH = E(Qt, "TransformationMode", "SmoothTransformation")
 # value boxes painted by the last value_ladder setup: {"doc": name, "rects": [...], "targets": [...]}
 BOXES = {}
+# student settings mirrored from progress.json by the docker. reference_side "right" = lefty layout:
+# the reference sits on the right so a left hand never covers it, and the drawing is on the left.
+SETTINGS = {"reference_side": "left"}
+# the last sight-size / figure reference, so it can be flipped to the other side later
+LAST_REF = {}
 
 
 # ------------------------------------------------------------------ safe getters
@@ -536,7 +541,11 @@ def box_values(d=None):
 
 
 def _reference_doc(spec):
-    """Sight-size setup: reference image on the left, blank paper on the right, same size."""
+    """Sight-size setup: reference and blank paper side by side, the same size.
+
+    The reference goes on SETTINGS["reference_side"] (or spec "side"): left by default,
+    right for left-handed students so the drawing hand never covers the reference.
+    """
     from . import library
     path = spec.get("path")
     if not path and spec.get("pick"):
@@ -567,19 +576,68 @@ def _reference_doc(spec):
         d = _new_doc(name, w, h)
     else:
         _show_doc(d)
+    side = spec.get("side") or SETTINGS.get("reference_side", "left")
+    half = (w - 40) // 2
+    x0 = 0 if side == "left" else half + 40  # the reference's half of the canvas
     img = QtGui.QImage(w, h, ARGB32)
     img.fill(0)
     p = QtGui.QPainter(img)
-    split = (w - 40) // 2 if spec.get("fixed") else src.width()
-    p.drawImage(max(0, (split - src.width()) // 2), (h - src.height()) // 2, src)
+    p.drawImage(x0 + max(0, (half - src.width()) // 2), (h - src.height()) // 2, src)
     p.setPen(QtGui.QPen(QtGui.QColor(200, 60, 50), 3))
-    p.drawLine(split + 20, 0, split + 20, h)
+    p.drawLine(half + 20, 0, half + 20, h)
     p.end()
     _paint_image_layer(d, REFERENCE_LAYER, img, locked=True)
     _practice_layer({"name": spec.get("layer", "Copy"), "clear": bool(spec.get("clear", True))})
-    devlog.log("reference_doc:", os.path.basename(path))
+    devlog.log("reference_doc:", os.path.basename(path), "side", side)
     BOXES.clear()
+    LAST_REF.clear()
+    LAST_REF.update({"doc": name, "path": path, "side": side, "shift": half + 40,
+                     "spec": {k: v for k, v in spec.items() if k not in ("pick", "set", "clear", "side")}})
     return path
+
+
+def _flip_reference(spec):
+    """Swap reference and drawing sides on the open sight-size canvas, keeping the drawing."""
+    d = doc()
+    if d is None or not LAST_REF or d.name() != LAST_REF.get("doc"):
+        new = "right" if SETTINGS.get("reference_side", "left") == "left" else "left"
+        SETTINGS["reference_side"] = new
+        devlog.log("flip_reference: no sight-size canvas open, default side now", new)
+        return
+    new = "right" if LAST_REF["side"] == "left" else "left"
+    SETTINGS["reference_side"] = new
+    dx = LAST_REF["shift"] if new == "left" else -LAST_REF["shift"]
+    for n in all_nodes(d):
+        if n.name() in (REFERENCE_LAYER, GUIDE_LAYER) or n.type() != "paintlayer" or n.locked():
+            continue
+        pos = n.position()
+        n.move(pos.x() + dx, pos.y())
+    spec2 = dict(LAST_REF["spec"], path=LAST_REF["path"], side=new, clear=False)
+    _reference_doc(spec2)
+    d.refreshProjection()
+
+
+def add_image_layer(path, name=None):
+    """Photobash CC style: drop an image into the current document as its own layer, fit to the canvas."""
+    d = doc()
+    if d is None:
+        return None
+    src = QtGui.QImage(path)
+    if src.isNull():
+        return None
+    w, h = d.width(), d.height()
+    src = src.scaled(w, h, E(Qt, "AspectRatioMode", "KeepAspectRatio"), SMOOTH).convertToFormat(ARGB32)
+    img = QtGui.QImage(w, h, ARGB32)
+    img.fill(0)
+    p = QtGui.QPainter(img)
+    p.drawImage((w - src.width()) // 2, (h - src.height()) // 2, src)
+    p.end()
+    n = d.createNode((name or os.path.splitext(os.path.basename(path))[0])[:40], "paintlayer")
+    d.rootNode().addChildNode(n, _top_child(d))
+    n.setPixelData(image_bytes(img), 0, 0, w, h)
+    d.setActiveNode(n)
+    d.refreshProjection()
+    return n
 
 
 def _paint_blob(spec):
@@ -617,6 +675,7 @@ SETUPS = {
     "clear_guides": _clear_guides,
     "value_ladder": _value_ladder,
     "reference_doc": _reference_doc,
+    "flip_reference": _flip_reference,
     "paint_blob": _paint_blob,
 }
 

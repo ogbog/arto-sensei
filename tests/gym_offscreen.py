@@ -148,3 +148,94 @@ for li, lesson in enumerate(d.lessons):
 print("visited cards:", n_cards)
 d.tabs.setCurrentIndex(0); d.resize(380, 820); d._load_lesson([l["id"] for l in d.lessons].index("hand-motion"))
 d._goto(1); app.processEvents(); d.grab().save(os.path.join(HERE, "out", "quiet_card.png"))
+
+# --- 1.1: library download (Commons + Openverse faked), thumbnails, grid, clipboard credit, lefty setting
+import io, json as _json
+from arto_sensei import library as LIB
+png = io.BytesIO()
+from PyQt5 import QtCore as _QC
+_img = QtGui.QImage(900, 700, QtGui.QImage.Format_RGB32); _img.fill(QtGui.QColor(120, 90, 60))
+_buf = _QC.QBuffer(); _buf.open(_QC.QIODevice.WriteOnly); _img.save(_buf, "PNG"); PNG = bytes(_buf.data())
+calls = []
+def fake_get(url, on_wait=None, headers=None, limit=0):
+    calls.append(url)
+    if "commons.wikimedia.org/w/api.php" in url:
+        assert "iiurlwidth=1280" in url and "filetype%3Abitmap" in url
+        return _json.dumps({"query": {"pages": {
+            "1": {"index": 1, "title": "File:Zorn study.jpg", "imageinfo": [{"mime": "image/jpeg", "width": 2000,
+                  "thumburl": "https://upload.wikimedia.org/z.jpg", "descriptionurl": "https://commons/z",
+                  "extmetadata": {"LicenseShortName": {"value": "Public domain"}, "Artist": {"value": "<a>Anders Zorn</a>"}}}]},
+            "2": {"index": 2, "title": "File:Modern photo.jpg", "imageinfo": [{"mime": "image/jpeg", "width": 2000,
+                  "thumburl": "https://upload.wikimedia.org/m.jpg", "descriptionurl": "https://commons/m",
+                  "extmetadata": {"LicenseShortName": {"value": "CC BY-SA 4.0"}}}]}}}}).encode()
+    if "api.openverse.org" in url:
+        assert headers and headers.get("Authorization") == "Bearer TOKEN" and "license=pdm%2Ccc0" in url
+        return _json.dumps({"results": [{"id": "ov1", "title": "Portrait", "creator": "Anders Zorn", "license": "pdm",
+                                         "url": "https://museum/ov1.png", "filetype": "png", "width": 1600,
+                                         "foreign_landing_url": "https://museum/ov1", "source": "met"}]}).encode()
+    return PNG
+LIB._get = fake_get; LIB.time.sleep = lambda s: None
+LIB.openverse_token = lambda: "TOKEN"
+dl = LIB.Downloader("artist_anders_zorn", queries=["Anders Zorn"], limit=4)
+msgs = []; dl.progress.connect(msgs.append); dl.run()
+files = LIB.images("artist_anders_zorn")
+print("library:", [os.path.basename(f) for f in files], "|", msgs[-1])
+assert len(files) == 2, files                                   # PD Commons + PD Openverse, CC BY-SA rejected
+assert all(os.path.exists(LIB.thumb_path(f)) for f in files)
+assert "Anders Zorn" in LIB.credit_line(files[0]) and "Public domain" in LIB.credit_line(files[0])
+assert "artist_anders_zorn" in LIB.set_names() and LIB.label("artist_anders_zorn") == "Artist: Anders Zorn"
+d._refresh_sets(); d.lib_box.setCurrentIndex(d.lib_box.findData("artist_anders_zorn")); d._fill_grid()
+assert d.grid.count() == 2 and not d.grid.item(0).icon().isNull()
+d.grid.setCurrentRow(0); d._use_selected("credit")
+print("clipboard:", QtWidgets.QApplication.clipboard().text()[:70])
+assert "Anders Zorn" in QtWidgets.QApplication.clipboard().text()
+d._side_toggled(True)
+assert KS.SETTINGS["reference_side"] == "right" and d.progress.data["settings"]["reference_side"] == "right"
+print("lefty saved:", d.progress.data["settings"])
+# themed sets: every query is a plain string, every set has a label
+assert all(isinstance(q, str) and q for _k, (_l, qs) in LIB.SETS.items() for q in qs)
+print("sets:", len(LIB.SETS), "queries:", sum(len(qs) for _l, qs in LIB.SETS.values()))
+d.tabs.setCurrentIndex(1); d.resize(380, 1250); app.processEvents()
+d.grab().save(os.path.join(HERE, "out", "dojo_library.png"))
+
+# --- 1.1: reference side. Capture the painted reference layer and check which half holds the image.
+import importlib
+KS3 = importlib.reload(importlib.import_module("arto_sensei.krita_state"))
+class FDoc:
+    def __init__(s, w, h): s.w, s.h, s.nodes = w, h, []
+    def name(s): return "Sensei Sight Size"
+    def width(s): return s.w
+    def height(s): return s.h
+    def refreshProjection(s): pass
+class FNode:
+    def __init__(s, name, x=0): s._n, s._x = name, x
+    def name(s): return s._n
+    def type(s): return "paintlayer"
+    def locked(s): return False
+    def position(s): return _QC.QPoint(s._x, 0)
+    def move(s, x, y): s._x = x
+painted = {}
+fd = {}
+def _new(name, w, h):
+    fd["d"] = FDoc(w, h); return fd["d"]
+KS3._find_doc = lambda name: fd.get("d")
+KS3._new_doc = _new
+KS3._show_doc = lambda d: None
+KS3._paint_image_layer = lambda d, name, img, locked=True, opacity=255: painted.__setitem__(name, img.copy())
+KS3._practice_layer = lambda spec: None
+KS3.doc = lambda: fd.get("d")
+ref_png = os.path.join(HERE, "out", "ref.png"); _img.save(ref_png)
+def ink_side(img):
+    w = img.width(); y = img.height() // 2
+    left = sum(QtGui.qAlpha(img.pixel(x, y)) > 0 for x in range(0, w // 2 - 30, 7))
+    right = sum(QtGui.qAlpha(img.pixel(x, y)) > 0 for x in range(w // 2 + 30, w, 7))
+    return "left" if left > right else "right"
+KS3.SETTINGS["reference_side"] = "left"
+KS3._reference_doc({"path": ref_png}); a = ink_side(painted["Reference"])
+KS3.SETTINGS["reference_side"] = "right"; fd.clear()
+KS3._reference_doc({"path": ref_png}); b = ink_side(painted["Reference"])
+copy = FNode("Copy", 0)
+KS3.all_nodes = lambda d=None: [FNode("Reference"), copy]
+KS3._flip_reference({}); c = ink_side(painted["Reference"])
+print("reference side: default ->", a, "| lefty ->", b, "| flipped ->", c, "| drawing moved by", copy._x, "px (shift", KS3.LAST_REF["shift"], ")")
+assert (a, b, c) == ("left", "right", "left") and copy._x == KS3.LAST_REF["shift"]

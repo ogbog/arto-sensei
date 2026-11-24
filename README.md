@@ -51,7 +51,8 @@ A sandbox outside the lessons, for warming up every session:
 - **Drills** with scores, streaks and personal bests: even pressure, swell (thin-thick-thin), steady speed, flick, hatching lanes with red dot guides.
 - **Rhythm**: clean marks in 10 seconds. Quantity, not quality, so it stays fast.
 - **Timed figure drawing**: 30 s to 10 min poses from the library, each on a fresh layer.
-- **Public-domain library**: downloads about 24 images per set from Wikimedia Commons, keeps only files whose license metadata says public domain or CC0, and saves title, artist, license and source for each. Sets: Bargue plates, Bouguereau, Sargent, Leyendecker (pre-1929), Velazquez, Goya, Muybridge, William Hogarth. Teachers can drop their own images into any library folder.
+- **Lefty layout**: tick it once and every sight-size copy and pose puts the reference on the right, drawing on the left.
+- **Public-domain library**: 11 themed sets (Bargue plates, master drawings, academic figure painters, portraitists, old masters, Golden Age illustrators, landscapes, naturalism, movements, animals and motion, sculpture) plus **Find artist** for any single name. Every image is license-checked to public domain or CC0, with its credit saved. A thumbnail grid loads as you scroll; double-click for a sight-size canvas, **Add as layer**, or **Copy credit**. With an Openverse login from Photobash CC, museum collections join Wikimedia Commons as a source. Details and pruning notes: [docs/library.md](docs/library.md).
 
 > Copyright note: *William* Hogarth (1700s engravings) is public domain. *Burne* Hogarth (*Dynamic Anatomy*, 1958) is not, so he is not in the library.
 
@@ -63,7 +64,7 @@ A sandbox outside the lessons, for warming up every session:
 | `arto_sensei/metrics.py` | Pure Python stroke math: speed, pressure ramp, taper, steadiness, straightness, reach. The coaching judge and Dojo scores. |
 | `arto_sensei/checks.py` | 36 check types (view, actions, tools, dockers, brush, color, layers, layer stacks, selections, value boxes, pen strokes, rhythm counts). |
 | `arto_sensei/krita_state.py` | Safe Krita state reads and lesson setups (value ladders, hatching guides, sight-size reference docs, practice layers). |
-| `arto_sensei/library.py` | The public-domain library and its background downloader. |
+| `arto_sensei/library.py` | The public-domain library: themed sets, artist search, Commons + Openverse downloader, cached thumbnails, credits. |
 | `arto_sensei/widgets.py`, `docker.py` | Seismograph, lesson cards, the Lessons and Dojo tabs. |
 | `arto_sensei/lessons/` | `curriculum.json` (order) plus one JSON file per lesson. Edit these to write your own lessons. |
 | `tests/` | Offscreen gym (fake `krita` module + real PyQt5 + real QTabletEvents) and the lesson validator. |

@@ -24,7 +24,7 @@ from .widgets import Card, Seismograph, INK, EMBER, TEAL, GOLD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LESSON_DIR = os.path.join(HERE, "lessons")
-VERSION = "1.0.1"
+VERSION = "1.1.0"
 PRAISE = ("Nailed it.", "Clean!", "That's the stuff.", "Your hand just learned something.",
           "Sargent would nod. Probably.", "Yes. Exactly that.")
 
@@ -33,7 +33,7 @@ QWidget#senseiRoot { background:#171412; color:%s; }
 QTabWidget::pane { border:none; }
 QPushButton { padding:3px 10px; }
 QLabel#senseiBig { font-size:28px; font-weight:bold; color:%s; }
-QWidget#senseiRoot QLabel { color:%s; }
+QWidget#senseiRoot QLabel, QWidget#senseiRoot QCheckBox { color:%s; }
 QWidget#senseiInner { background:transparent; }
 QScrollArea#senseiScroll { background:transparent; border:none; }
 """ % (INK, GOLD, INK)
@@ -80,6 +80,8 @@ class ArtoSenseiDocker(DockWidget):
         devlog.boot_facts()
         devlog.fact("arto_sensei_version", VERSION)
         self.progress = Progress()
+        ks.SETTINGS.update(self.progress.data.get("settings", {}))
+        self._thumb_queue, self.grid_paths = [], []
         self.tap = PenTap(self)
         self.actions = ActionLog(self)
         self.ctx = Ctx(self.tap, self.actions, self.progress)
@@ -260,6 +262,7 @@ class ArtoSenseiDocker(DockWidget):
     def _card_setup(self, setups):
         ks.run_setups(setups)
         self.ctx.snap = ks.snapshot()
+        self._sync_side()
 
     @devlog.safe
     def _advance_from(self, i):
@@ -325,6 +328,11 @@ class ArtoSenseiDocker(DockWidget):
         intro.setWordWrap(True)
         intro.setTextFormat(RICH)
         lay.addWidget(intro)
+        self.lefty = QtWidgets.QCheckBox("Lefty layout (reference on the right)")
+        self.lefty.setToolTip("Sight-size copies and figure poses put the reference where your drawing hand won't cover it.")
+        self.lefty.setChecked(ks.SETTINGS.get("reference_side") == "right")
+        self.lefty.toggled.connect(self._side_toggled)
+        lay.addWidget(self.lefty)
         self.drill_box = QtWidgets.QComboBox()
         for key, label in DRILLS:
             self.drill_box.addItem(label, key)
@@ -391,21 +399,59 @@ class ArtoSenseiDocker(DockWidget):
         lib_row = QtWidgets.QHBoxLayout()
         self.lib_box = QtWidgets.QComboBox()
         _shrinkable(self.lib_box)
+        self.lib_box.currentIndexChanged.connect(self._fill_grid)
         dl = QtWidgets.QPushButton("Download")
-        dl.setToolTip("Fetch about 24 public-domain images from Wikimedia Commons (license-checked).")
+        dl.setToolTip("Fetch about 36 public-domain images for this set from Wikimedia Commons "
+                      "(and Openverse museums if Photobash CC is connected). License-checked.")
         dl.clicked.connect(self._download)
-        opn = QtWidgets.QPushButton("Open folder")
+        opn = QtWidgets.QPushButton("Folder")
         opn.clicked.connect(lambda: __import__("webbrowser").open("file:///" + library.root().replace("\\", "/")))
-        lib_row.addWidget(self.lib_box, 1)
-        lib_row.addWidget(dl)
-        lib_row.addWidget(opn)
+        lib_row.addWidget(self.lib_box, 5)
+        lib_row.addWidget(dl, 3)
+        lib_row.addWidget(opn, 2)
         lay.addLayout(lib_row)
+        art_row = QtWidgets.QHBoxLayout()
+        self.artist_edit = QtWidgets.QLineEdit()
+        self.artist_edit.setPlaceholderText("Any artist, died before ~1955")
+        self.artist_edit.setToolTip("Public domain means old: artists who died before about 1955, "
+                                    "or US work published before 1931. Try Anders Zorn, Rembrandt, Rosa Bonheur.")
+        self.artist_edit.returnPressed.connect(self._find_artist)
+        find = QtWidgets.QPushButton("Find")
+        find.clicked.connect(self._find_artist)
+        art_row.addWidget(self.artist_edit, 3)
+        art_row.addWidget(find, 1)
+        lay.addLayout(art_row)
+        self.grid = QtWidgets.QListWidget()
+        self.grid.setViewMode(E(QtWidgets.QListView, "ViewMode", "IconMode"))
+        self.grid.setIconSize(QtCore.QSize(library.THUMB_PX, library.THUMB_PX))
+        self.grid.setResizeMode(E(QtWidgets.QListView, "ResizeMode", "Adjust"))
+        self.grid.setMovement(E(QtWidgets.QListView, "Movement", "Static"))
+        self.grid.setUniformItemSizes(True)
+        self.grid.setMinimumHeight(260)
+        self.grid.itemDoubleClicked.connect(lambda _it: self._use_selected("sight"))
+        self.grid.currentRowChanged.connect(self._show_credit)
+        self.grid.verticalScrollBar().valueChanged.connect(self._maybe_more_thumbs)
+        lay.addWidget(self.grid)
+        act_row = QtWidgets.QHBoxLayout()
+        for text, mode, tip in (("Sight size", "sight", "Open as a sight-size copy (double-click does this too)."),
+                                ("Add as layer", "layer", "Drop it into the current document as a new layer."),
+                                ("Copy credit", "credit", "Copy title, artist, license and source to the clipboard.")):
+            b = QtWidgets.QPushButton(text)
+            b.setToolTip(tip)
+            b.clicked.connect(lambda _=False, m=mode: self._use_selected(m))
+            act_row.addWidget(b)
+        lay.addLayout(act_row)
         self.lib_lbl = QtWidgets.QLabel("Drop your own JPGs or PNGs into any folder in the library, too.")
         self.lib_lbl.setWordWrap(True)
         self.lib_lbl.setStyleSheet("color:#a89a8a;")
         lay.addWidget(self.lib_lbl)
         lay.addStretch(1)
+        # let every row shrink with a narrow docker instead of overflowing it
+        for b in inner.findChildren(QtWidgets.QPushButton):
+            b.setSizePolicy(E(QtWidgets.QSizePolicy, "Policy", "Ignored"), E(QtWidgets.QSizePolicy, "Policy", "Fixed"))
+            b.setMinimumWidth(48)
         self._refresh_sets()
+        self._fill_grid()
         self._drill_changed()
         return w
 
@@ -435,10 +481,103 @@ class ArtoSenseiDocker(DockWidget):
         if self.downloader is not None and self.downloader.isRunning():
             self.lib_lbl.setText("Already downloading, hang on.")
             return
-        self.downloader = library.Downloader(key, parent=self)
-        self.downloader.progress.connect(self.lib_lbl.setText)
-        self.downloader.finished_set.connect(lambda k, n: self._refresh_sets())
-        self.downloader.start()
+        self._start_download(library.Downloader(key, parent=self))
+
+    def _start_download(self, dl):
+        self.downloader = dl
+        dl.progress.connect(self.lib_lbl.setText)
+        dl.finished_set.connect(self._download_done)
+        dl.start()
+
+    @devlog.safe
+    def _download_done(self, key, n):
+        self._refresh_sets()
+        i = self.lib_box.findData(key)
+        if i >= 0:
+            self.lib_box.setCurrentIndex(i)
+        self._fill_grid()
+
+    @devlog.safe
+    def _find_artist(self, *_):
+        name = self.artist_edit.text().strip()
+        if not name:
+            return
+        if self.downloader is not None and self.downloader.isRunning():
+            self.lib_lbl.setText("Already downloading, hang on.")
+            return
+        key = "artist_" + library.slug(name)
+        self._start_download(library.Downloader(key, queries=[name], limit=24, parent=self))
+
+    # ------------------------------------------------------------ library browser (Photobash CC lineage)
+    @devlog.safe
+    def _fill_grid(self, *_):
+        self.grid.clear()
+        self.grid_paths = library.images(self.lib_box.currentData())
+        self._thumb_queue = list(range(len(self.grid_paths)))
+        for p in self.grid_paths:
+            it = QtWidgets.QListWidgetItem(os.path.splitext(os.path.basename(p))[0][:18])
+            it.setToolTip(library.credit_line(p))
+            self.grid.addItem(it)
+        self._load_thumbs(36)
+
+    def _load_thumbs(self, n):
+        """Infinite-scroll style: icons load in batches as the student scrolls."""
+        from .qt import QtGui
+        for _ in range(min(n, len(self._thumb_queue))):
+            i = self._thumb_queue.pop(0)
+            tp = library.make_thumb(self.grid_paths[i])
+            if tp:
+                self.grid.item(i).setIcon(QtGui.QIcon(tp))
+
+    @devlog.safe
+    def _maybe_more_thumbs(self, value):
+        bar = self.grid.verticalScrollBar()
+        if self._thumb_queue and value >= bar.maximum() - 2 * library.THUMB_PX:
+            self._load_thumbs(24)
+
+    @devlog.safe
+    def _show_credit(self, row):
+        if 0 <= row < len(self.grid_paths):
+            self.lib_lbl.setText(library.credit_line(self.grid_paths[row]))
+
+    @devlog.safe
+    def _use_selected(self, mode):
+        row = self.grid.currentRow()
+        if not (0 <= row < len(self.grid_paths)):
+            self.lib_lbl.setText("Pick an image in the grid first.")
+            return
+        path = self.grid_paths[row]
+        line = library.credit_line(path)
+        QtWidgets.QApplication.clipboard().setText(line)
+        if mode == "sight":
+            ks.run_setups([{"do": "reference_doc", "path": path}])
+            self.lib_lbl.setText("Sight-size canvas ready. Credit copied:\n" + line)
+        elif mode == "layer":
+            if ks.add_image_layer(path) is None:
+                self.lib_lbl.setText("Open a document first, then Add as layer.")
+                return
+            self.lib_lbl.setText("Layer added. Credit copied:\n" + line)
+        else:
+            self.lib_lbl.setText("Credit copied:\n" + line)
+
+    @devlog.safe
+    def _side_toggled(self, lefty):
+        new = "right" if lefty else "left"
+        d = ks.doc()
+        if ks.LAST_REF and d is not None and d.name() == ks.LAST_REF.get("doc") and ks.LAST_REF.get("side") != new:
+            ks.run_setups(["flip_reference"])  # moves the open canvas over, drawing and all
+        ks.SETTINGS["reference_side"] = new
+        self.progress.data.setdefault("settings", {})["reference_side"] = new
+        self.progress.save()
+
+    def _sync_side(self):
+        want = ks.SETTINGS.get("reference_side") == "right"
+        if self.lefty.isChecked() != want:
+            self.lefty.blockSignals(True)
+            self.lefty.setChecked(want)
+            self.lefty.blockSignals(False)
+            self.progress.data.setdefault("settings", {})["reference_side"] = ks.SETTINGS["reference_side"]
+            self.progress.save()
 
     @devlog.safe
     def _pose_start(self, *_):

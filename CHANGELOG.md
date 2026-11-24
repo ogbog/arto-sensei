@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.0 (2026-11-24)
+
+- **Lefty layout.** A Dojo checkbox puts the reference on the right and the drawing on the left for
+  sight-size copies and figure poses, so a left hand never covers the reference. A swap button in
+  lessons 16 and 24 flips an open canvas, moving the drawing with it. Saved per student.
+- **Bigger library.** 11 themed sets and 157 searches built from Oscar's wishlist, pruned to artists who
+  can actually be public domain (see `docs/library.md` for every set and every cut, with reasons).
+  **Find artist** downloads any single name into its own folder.
+- **From Photobash CC:** Openverse museum collections (Met, Smithsonian, Rijksmuseum and more) as a
+  second source, reusing the Openverse login Photobash CC already stored; a thumbnail grid that loads as
+  you scroll; double-click for a sight-size canvas; **Add as layer**; **Copy credit** to the clipboard.
+- Thumbnails are cached at download time; Openverse licenses read as plain words ("Public domain
+  (Public Domain Mark)"); large files over 25 MB are skipped.
+
 ## 1.0.1 (2026-11-23)
 
 - Library downloads no longer trip Wikimedia's HTTP 429: thumbnails use the standard 1280 px width,
